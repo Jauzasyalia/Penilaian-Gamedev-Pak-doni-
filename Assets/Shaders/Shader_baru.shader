@@ -2,7 +2,7 @@ Shader "Unlit/Shader_baru"
 {
     Properties
     {
-       [MainColor]_Warna ("warna", Color) = (245,39,156,1)
+       [MainColor]_Warna ("warna", Color) = (0.96, 0.15, 0.61, 1)
     }
     SubShader
     {
@@ -19,7 +19,7 @@ Shader "Unlit/Shader_baru"
             Name "Unlit2D"
             Tags { "LightMode" = "Universal2D" }
 
-            HSLPROGRAM
+            HLSLPROGRAM
 
             #pragma vertex vert
             #pragma fragment frag

@@ -2,8 +2,8 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using TMPro;
 
-// PlayerMovement + tembak. Abstraction: implementasi IDamageable agar bisa dilukai musuh.
-public class PlayerMovement : MonoBehaviour, IDamageable
+// Pergerakan player + tembak. Abstraction: implementasi IDamageable agar bisa dilukai musuh.
+public class PlayerController : MonoBehaviour, IDamageable
 {
     [SerializeField] private PlayerData playerData;
 
@@ -27,7 +27,7 @@ public class PlayerMovement : MonoBehaviour, IDamageable
         currentHP = playerData.maxHP;
 
         // Pemancar event: beritahu penerima HP awal player
-        PemancarEvent.PancarkanHPBerubah(currentHP, playerData.maxHP);
+        PengirimEvent.PancarkanHPBerubah(currentHP, playerData.maxHP);
     }
 
 
@@ -115,7 +115,7 @@ public class PlayerMovement : MonoBehaviour, IDamageable
             Debug.Log("Koin diambil! Skor sekarang: " + score);
 
             // Pemancar event: skor berubah
-            PemancarEvent.PancarkanSkorBerubah(score);
+            PengirimEvent.PancarkanSkorBerubah(score);
 
             // PENTING: Lapor ke GameManager agar dicek apakah sudah menang
             if (gameManager != null)
@@ -139,11 +139,11 @@ public class PlayerMovement : MonoBehaviour, IDamageable
         Debug.Log("Player HP: " + currentHP);
 
         // Pemancar event: HP berubah
-        PemancarEvent.PancarkanHPBerubah(currentHP, playerData.maxHP);
+        PengirimEvent.PancarkanHPBerubah(currentHP, playerData.maxHP);
 
         if (currentHP <= 0)
         {
-            PemancarEvent.PancarkanPlayerMati();
+            PengirimEvent.PancarkanPlayerMati();
             GameManager.Instance.GameOver();
         }
     }

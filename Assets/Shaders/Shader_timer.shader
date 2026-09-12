@@ -24,8 +24,8 @@ Shader "Unlit/Shader_Primer"
         {
             HLSLPROGRAM
 
-            #pragma vertex vert
-            #pragma fragment frag
+            #pragma vertex Vert
+            #pragma fragment Frag
             // make fog work
             #pragma multi_compile_fog
 
@@ -35,7 +35,7 @@ Shader "Unlit/Shader_Primer"
             SAMPLER(sampler_MainTex);
 
             CBUFFER_START(UnityPerMaterial)
-                half4 _Tint;
+                half4 _MainColor;
                 float4 _MainTex_ST;
                 float _KecepatanDenyut;
                 float _KecepatanGulir;
@@ -55,10 +55,10 @@ Shader "Unlit/Shader_Primer"
                 half4 warnaVertex : COLOR;
             };
 
-            KeFragment Vert(Atribut masuk)
+            KeFragment Vert(Attributes masuk)
             {
                 KeFragment keluar;
-                keluar.posisiClip = TransformObjectToHClip(masuk.posisiObjek.xyz);
+                keluar.posisiClip = TransformObjectToHClip(masuk.posisiOS.xyz);
                 keluar.uv = TRANSFORM_TEX(masuk.uv, _MainTex);
                 keluar.warnaVertex = masuk.warnaVertex;
                 return keluar;
@@ -70,7 +70,7 @@ Shader "Unlit/Shader_Primer"
                 uv.x += _Time.y * _KecepatanGulir;
 
                 half4 teks = SAMPLE_TEXTURE2D(_MainTex, sampler_MainTex, uv);
-                half4 kolom = teks * (half4)_Tint * masuk.warnaVertex;
+                half4 kolom = teks * (half4)_MainColor * masuk.warnaVertex;
 
                 // sin() hasilnya -1..1, kita geser jadi 0.6..1 supaya tidak sampai hitam.
                 half denyut = 0.6h + 0.4h * (half)sin(_Time.y * _KecepatanDenyut);

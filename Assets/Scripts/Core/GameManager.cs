@@ -6,7 +6,6 @@ public class GameManager : MonoBehaviour
 
     public int totalKoin; 
     private int koinTerkumpul = 0;
-    private int jumlahZombieMati = 0;
     public GameObject winPanel; // Panel untuk menampilkan kemenangan
     public static GameManager Instance;
 
@@ -16,23 +15,6 @@ public class GameManager : MonoBehaviour
     {
         Instance = this;
         Time.timeScale = 1f; // pastikan game jalan normal saat scene dimuat ulang
-    }
-
-    // Berlangganan event dari Enemy
-    void OnEnable()
-    {
-        Enemy.OnZombieMati += SaatZombieMati;
-    }
-
-    void OnDisable()
-    {
-        Enemy.OnZombieMati -= SaatZombieMati;
-    }
-
-    void SaatZombieMati(Enemy zombie)
-    {
-        jumlahZombieMati++;
-        Debug.Log("GameManager dengar event. Zombie mati: " + jumlahZombieMati + " (" + zombie.name + ")");
     }
 
     void Start()

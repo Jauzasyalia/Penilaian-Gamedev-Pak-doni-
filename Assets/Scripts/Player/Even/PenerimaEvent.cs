@@ -1,7 +1,7 @@
 using UnityEngine;
 using TMPro;
 
-// Penerima Event (subscriber): berlangganan event dari PemancarEvent dan Enemy (OnZombieMati),
+// Penerima Event (subscriber): berlangganan event dari PengirimEvent dan Enemy (OnZombieMati),
 // lalu bereaksi (update UI / log) tanpa perlu tahu siapa yang memancarkan.
 public class PenerimaEvent : MonoBehaviour
 {
@@ -14,22 +14,22 @@ public class PenerimaEvent : MonoBehaviour
     // Subscribe saat aktif
     void OnEnable()
     {
-        PemancarEvent.OnTekanSpasi   += SaatTekanSpasi;
-        PemancarEvent.OnGameMulai    += SaatGameMulai;
-        PemancarEvent.OnHPBerubah    += SaatHPBerubah;
-        PemancarEvent.OnSkorBerubah  += SaatSkorBerubah;
-        PemancarEvent.OnPlayerMati   += SaatPlayerMati;
+        PengirimEvent.OnTekanSpasi   += SaatTekanSpasi;
+        PengirimEvent.OnGameMulai    += SaatGameMulai;
+        PengirimEvent.OnHPBerubah    += SaatHPBerubah;
+        PengirimEvent.OnSkorBerubah  += SaatSkorBerubah;
+        PengirimEvent.OnPlayerMati   += SaatPlayerMati;
         Enemy.OnZombieMati           += SaatZombieMati;
     }
 
     // Unsubscribe saat nonaktif (wajib, supaya tidak memory leak / error saat ganti scene)
     void OnDisable()
     {
-        PemancarEvent.OnTekanSpasi   -= SaatTekanSpasi;
-        PemancarEvent.OnGameMulai    -= SaatGameMulai;
-        PemancarEvent.OnHPBerubah    -= SaatHPBerubah;
-        PemancarEvent.OnSkorBerubah  -= SaatSkorBerubah;
-        PemancarEvent.OnPlayerMati   -= SaatPlayerMati;
+        PengirimEvent.OnTekanSpasi   -= SaatTekanSpasi;
+        PengirimEvent.OnGameMulai    -= SaatGameMulai;
+        PengirimEvent.OnHPBerubah    -= SaatHPBerubah;
+        PengirimEvent.OnSkorBerubah  -= SaatSkorBerubah;
+        PengirimEvent.OnPlayerMati   -= SaatPlayerMati;
         Enemy.OnZombieMati           -= SaatZombieMati;
     }
 

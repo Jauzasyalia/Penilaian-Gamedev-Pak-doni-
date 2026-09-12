@@ -5,8 +5,8 @@ using UnityEngine.InputSystem;
 // PEMANCAR EVENT (publisher)
 // Event = delegate yang lebih aman: kelas lain boleh langganan (+=),
 // tapi HANYA pemancar yang boleh Invoke.
-// PenerimaEvent (dan GameManager) berlangganan ke event-event di bawah ini.
-public class PemancarEvent : MonoBehaviour
+// PenerimaEvent berlangganan ke event-event di bawah ini.
+public class PengirimEvent : MonoBehaviour
 {
     // --- Event sederhana: tekan spasi (sama seperti contoh di kelas) ---
     public static event Action OnTekanSpasi;
@@ -36,7 +36,7 @@ public class PemancarEvent : MonoBehaviour
         }
     }
 
-    // Dipanggil oleh PlayerMovement
+    // Dipanggil oleh PlayerController
     public static void PancarkanHPBerubah(float hpSekarang, float hpMaks)
     {
         OnHPBerubah?.Invoke(hpSekarang, hpMaks);
