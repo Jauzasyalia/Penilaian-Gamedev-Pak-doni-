@@ -1,12 +1,13 @@
 
 using UnityEngine;
-public class Enemy : MonoBehaviour
+// Abstraction: Enemy mengimplementasikan interface IDamageable
+public class Enemy : MonoBehaviour, IDamageable
 {
-    [SerializeField] public int hp = 100;
+    [SerializeField] public float hp = 100f;
     public float ms = 2f;
 
-    // Demage yg di terima enemy seriap kali menabrak player
-    [SerializeField] private int damageSaatTabrakan = 20;
+    // Damage yang diberikan enemy ke player setiap kali menabrak player
+    [SerializeField] private float damageSaatTabrakan = 20f;
 
     protected Transform player;
 
@@ -18,7 +19,7 @@ public class Enemy : MonoBehaviour
     [SerializeField] private float radiusPatrol = 3f;
     private Vector2 titikAwal;    
     private Vector2 tujuanPatrol;  
-    private StateZombie state = StateZombie.IDLE;
+    protected StateZombie state = StateZombie.IDLE;
     private float waktuSerangTerakhir;
     public static event System.Action<Enemy> OnZombieMati;
 
@@ -34,7 +35,7 @@ public class Enemy : MonoBehaviour
         PilihTujuanPatrolBaru();
     }
 
-    void Update()
+    protected virtual void Update()
     {
         PeriksaTransisi();
 
@@ -117,10 +118,11 @@ public class Enemy : MonoBehaviour
 
     // Satu-satunya pintu mengubah hp dari luar
     // (nanti dipanggil oleh senjata/Peashooter milik Player).
-    public void KenaDamage(int damage)
+    // Implementasi IDamageable
+    public virtual void KenaDamage(float damage)
     {
         hp -= damage;
-        Debug.Log("Enemy Kena damage"+  + damage + " HP Sekarang " + hp);
+        Debug.Log("Enemy kena damage " + damage + ", HP sekarang " + hp);
 
         if (hp <= 0) 
         {

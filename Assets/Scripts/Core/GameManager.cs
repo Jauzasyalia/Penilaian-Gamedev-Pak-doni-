@@ -5,7 +5,8 @@ public class GameManager : MonoBehaviour
 {
 
     public int totalKoin; 
-    private int koinTerkumpul = 0; 
+    private int koinTerkumpul = 0;
+    private int jumlahZombieMati = 0;
     public GameObject winPanel; // Panel untuk menampilkan kemenangan
     public static GameManager Instance;
 
@@ -14,6 +15,24 @@ public class GameManager : MonoBehaviour
     void Awake()
     {
         Instance = this;
+        Time.timeScale = 1f; // pastikan game jalan normal saat scene dimuat ulang
+    }
+
+    // Berlangganan event dari Enemy
+    void OnEnable()
+    {
+        Enemy.OnZombieMati += SaatZombieMati;
+    }
+
+    void OnDisable()
+    {
+        Enemy.OnZombieMati -= SaatZombieMati;
+    }
+
+    void SaatZombieMati(Enemy zombie)
+    {
+        jumlahZombieMati++;
+        Debug.Log("GameManager dengar event. Zombie mati: " + jumlahZombieMati + " (" + zombie.name + ")");
     }
 
     void Start()
@@ -59,15 +78,15 @@ public class GameManager : MonoBehaviour
 
     public void AmbilKoin() 
     { 
-        koinTerkumpul++; 
-        // TODO: jika koinTerkumpul == totalKoin, panggil Menang() 
-        if ( koinTerkumpul == totalKoin) Menang(); 
+        koinTerkumpul++;
+        if (koinTerkumpul >= totalKoin) Menang();
     }
 
     void Menang() 
     { 
-        Debug.Log("KAMU MENANG!"); 
+        Debug.Log("KAMU MENANG!");
         Time.timeScale = 0f;
-        winPanel.SetActive(true);
+        currentState = GameState.GameOver;
+        if (winPanel != null) winPanel.SetActive(true);
     } 
 }
