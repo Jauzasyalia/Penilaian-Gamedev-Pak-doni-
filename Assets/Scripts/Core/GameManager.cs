@@ -3,6 +3,10 @@ using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
+
+    public int totalKoin; 
+    private int koinTerkumpul = 0; 
+    public GameObject winPanel; // Panel untuk menampilkan kemenangan
     public static GameManager Instance;
 
     public GameState currentState;
@@ -15,6 +19,7 @@ public class GameManager : MonoBehaviour
     void Start()
     {
         currentState = GameState.Playing;
+        totalKoin = GameObject.FindGameObjectsWithTag("Coin").Length; 
     }
 
     void Update()
@@ -51,4 +56,18 @@ public class GameManager : MonoBehaviour
         Time.timeScale = 0f;
         currentState = GameState.GameOver;
     }
+
+    public void AmbilKoin() 
+    { 
+        koinTerkumpul++; 
+        // TODO: jika koinTerkumpul == totalKoin, panggil Menang() 
+        if ( koinTerkumpul == totalKoin) Menang(); 
+    }
+
+    void Menang() 
+    { 
+        Debug.Log("KAMU MENANG!"); 
+        Time.timeScale = 0f;
+        winPanel.SetActive(true);
+    } 
 }
